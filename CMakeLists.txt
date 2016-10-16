@@ -1,10 +1,21 @@
 cmake_minimum_required(VERSION 3.0)
-project(article_thread_safe_cache)
-
-add_executable(
-	article_thread_safe_cache
+project(post_threadsafeclass)
+set(
+	headers
 	cache_data.h
+)
+add_executable(
+	cache1
+	${headers}
 	cache1.cpp
+)
+add_executable(
+	cache2
+	${headers}
 	cache2.cpp
+)
+add_executable(
+	cache3
+	${headers}
 	cache3.cpp
 )
