@@ -44,12 +44,12 @@ int main(int argc, char** argv)
 	val = cache.get(1);
 	if (val)
 	{
-		assert(cache.get(1)->size() == 1024);
+		assert(val->size() == 1024);
 	}
 
 	val = cache.get(2);
 	if (val)
 	{
-		assert(cache.get(2)->size() == 2048);
+		assert(val->size() == 2048);
 	}
 }
