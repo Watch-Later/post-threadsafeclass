@@ -13,24 +13,21 @@ class Cache3
 public:
 	std::shared_ptr<CacheData> get(int key) const
 	{
-		_mtx.lock();
+		std::lock_guard<std::mutex> l(_mtx);
 		std::map<int, std::shared_ptr<CacheData> >::const_iterator it;
 		if ((it = _map.find(key)) != _map.end())
 		{
 			auto val = it->second;
-			_mtx.unlock();
 			return val;
 		}
-		_mtx.unlock();
 		return std::shared_ptr<CacheData>();
-	}
+	} // auto unlock (lock_guard, RAII)
 
 	void insert(int key, std::shared_ptr<CacheData> value)
 	{
-		_mtx.lock();
+		std::lock_guard<std::mutex> l(_mtx);
 		_map.insert(std::make_pair(key, value));
-		_mtx.unlock();
-	}
+	} // auto unlock (lock_guard, RAII)
 };
 
 

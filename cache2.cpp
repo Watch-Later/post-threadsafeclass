@@ -16,25 +16,22 @@ class Cache2
 public:
 	bool contains(int key) const
 	{
-		_mtx.lock();
+		std::lock_guard<std::mutex> l(_mtx);
 		bool b = _map.find(key) != _map.end();
-		_mtx.unlock();
 		return b;
 	}
 
 	std::shared_ptr<CacheData> get(int key) const
 	{
-		_mtx.lock();
-		std::shared_ptr<CacheData> val = _map.at(key);
-		_mtx.unlock();
+		std::lock_guard<std::mutex> l(_mtx);
+		std::shared_ptr<CacheData> val = _map.at(key); // can throw an std::exception
 		return val;
 	}
 
 	void insert(int key, std::shared_ptr<CacheData> value)
 	{
-		_mtx.lock();
+		std::lock_guard<std::mutex> l(_mtx);
 		_map.insert(std::make_pair(key, value));
-		_mtx.unlock();
 	}
 };
 
